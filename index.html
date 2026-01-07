@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>História em Quadrinhos</title>
+    <title>Webcomic - A Jornada Épica - Página 1</title>
     <style>
         * {
             margin: 0;
@@ -12,33 +12,24 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-            padding-top: 180px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* HEADER */
+        /* Header */
         header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: rgba(255, 255, 255, 0.95);
             padding: 2rem;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
         }
 
-        /* Adiciona espaçamento no body para compensar o header fixo */
-        body {
-            padding-top: 140px;
-        }
-
-        .header-content h1 {
+        header h1 {
             font-size: 2.5rem;
+            color: #333;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -52,294 +43,229 @@
             flex-wrap: wrap;
         }
 
-        .header-info p {
+        .header-info span {
+            color: #666;
             font-size: 1rem;
-            opacity: 0.9;
         }
 
-        /* ÁREA DE CONTEÚDO - QUADRINHOS */
-        .comic-container {
+        .header-info strong {
+            color: #764ba2;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
             max-width: 1400px;
-            margin: 3rem auto;
+            width: 100%;
+            margin: 2rem auto;
             padding: 0 2rem;
         }
 
         .comic-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: auto auto auto;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .comic-panel {
-            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
-            border: 4px solid #333;
+            background: white;
             border-radius: 8px;
-            padding: 1.5rem;
-            min-height: 300px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
         }
 
         .comic-panel:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
 
-        /* Painéis grandes ocupam 2 colunas */
-        .panel-large {
-            grid-column: span 2;
-        }
-
-        /* No desktop, quadro 6 também é grande (2 colunas) */
-        @media (min-width: 1025px) {
-            .comic-panel:nth-child(6) {
-                grid-column: span 2;
-            }
-        }
-
-        .panel-number {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #667eea;
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
+        .panel-content {
+            width: 100%;
+            height: 100%;
+            min-height: 250px;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-size: 1.5rem;
+            color: #333;
             font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .panel-image {
-            width: 100%;
-            height: 100%;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
             overflow: hidden;
-            background-color: rgba(255, 255, 255, 0.3);
         }
 
-        .panel-image img {
+        .comic-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            display: block;
         }
 
-        .panel-text {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            max-width: 80%;
-            text-align: center;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #2c3e50;
-            font-weight: 600;
-            background-color: white;
-            padding: 1rem 1.25rem;
-            border-radius: 20px;
-            border: 3px solid #333;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            z-index: 10;
+        /* Desktop layout */
+        .comic-panel:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1 / 3;
         }
 
-        /* Rabinho do balão */
-        .panel-text::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 15px solid #333;
+        .comic-panel:nth-child(2) {
+            grid-column: 2;
+            grid-row: 1;
         }
 
-        .panel-text::before {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 12px solid transparent;
-            border-right: 12px solid transparent;
-            border-top: 12px solid white;
-            z-index: 1;
+        .comic-panel:nth-child(3) {
+            grid-column: 2;
+            grid-row: 2;
         }
 
-        /* MENU DE PAGINAÇÃO */
-        .pagination-menu {
+        .comic-panel:nth-child(4) {
+            grid-column: 1 / 3;
+            grid-row: 3;
+        }
+
+        /* Pagination */
+        .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 1rem;
-            margin-top: 2rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .pagination-btn {
-            padding: 0.75rem 1.5rem;
-            background-color: #667eea;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-
-        .pagination-btn:hover:not(:disabled) {
-            background-color: #764ba2;
-            transform: translateY(-2px);
-        }
-
-        .pagination-btn:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-
-        .page-numbers {
-            display: flex;
             gap: 0.5rem;
+            padding: 2rem;
+            margin: 0 auto;
+            max-width: 1400px;
         }
 
         .page-btn {
-            width: 45px;
+            min-width: 45px;
             height: 45px;
-            border: 2px solid #667eea;
-            background-color: white;
-            color: #667eea;
-            border-radius: 5px;
-            font-size: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.9);
+            color: #764ba2;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
         }
 
         .page-btn:hover {
-            background-color: #667eea;
+            background: #764ba2;
             color: white;
-            transform: scale(1.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .page-btn.active {
-            background-color: #667eea;
+            background: #764ba2;
             color: white;
+            border-color: #764ba2;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
-        .current-page-info {
-            text-align: center;
-            margin-top: 1rem;
-            font-size: 1.1rem;
-            color: #667eea;
-            font-weight: 600;
+        .prev-btn,
+        .next-btn {
+            font-size: 1.3rem;
+            padding: 0 0.5rem;
         }
 
-        /* FOOTER */
+        .page-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Footer */
         footer {
-            background-color: #2c3e50;
-            color: white;
-            padding: 3rem 2rem 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            margin-top: auto;
         }
 
         .footer-content {
             max-width: 1400px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: #667eea;
-            font-size: 1.2rem;
-        }
-
-        .footer-section p {
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        .social-links {
             display: flex;
-            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
+            gap: 2rem;
         }
 
-        .social-links a {
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: #764ba2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
             text-decoration: none;
-            padding: 0.5rem 1rem;
-            background-color: #667eea;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            font-weight: bold;
+            transition: transform 0.3s ease, background 0.3s ease;
         }
 
-        .social-links a:hover {
-            background-color: #764ba2;
+        .social-icon:hover {
+            transform: scale(1.1);
+            background: #667eea;
         }
 
-        .contact-info p {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-bottom {
+        .footer-info {
             text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            opacity: 0.7;
+            color: #666;
         }
 
-        /* TABLET - 2 COLUNAS */
+        .footer-info p {
+            margin: 0.3rem 0;
+        }
+
+        /* Responsive Design */
         @media (max-width: 1024px) {
             .comic-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
+                grid-template-rows: auto;
             }
 
-            .header-content h1 {
+            header h1 {
                 font-size: 2rem;
             }
 
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
+            .comic-panel:nth-child(1) {
+                grid-column: 1 / 3;
+                grid-row: auto;
+            }
+
+            .comic-panel:nth-child(2) {
+                grid-column: 1 / 2;
+                grid-row: auto;
+            }
+
+            .comic-panel:nth-child(3) {
+                grid-column: 2 / 3;
+                grid-row: auto;
+            }
+
+            .comic-panel:nth-child(4) {
+                grid-column: 1 / 3;
+                grid-row: auto;
             }
         }
 
-        /* MOBILE - 1 COLUNA */
-        @media (max-width: 768px) {
-            body {
-                padding-top: 150px;
-            }
-
+        @media (max-width: 640px) {
             .comic-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
             }
 
-            .header-content h1 {
+            header h1 {
                 font-size: 1.5rem;
             }
 
@@ -348,275 +274,217 @@
                 gap: 0.5rem;
             }
 
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .comic-container {
+            main {
                 padding: 0 1rem;
-                margin: 2rem auto;
             }
 
-            header {
-                padding: 1.5rem;
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .comic-panel:nth-child(1),
+            .comic-panel:nth-child(2),
+            .comic-panel:nth-child(3),
+            .comic-panel:nth-child(4) {
+                grid-column: span 1;
+                grid-row: span 1;
+                aspect-ratio: 4/3;
             }
 
             .comic-panel {
-                min-height: 250px;
+                max-width: 500px;
+                margin: 0 auto;
+                width: 100%;
             }
 
-            .pagination-menu {
-                gap: 0.5rem;
-            }
-
-            .pagination-btn {
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
+            .pagination {
+                gap: 0.3rem;
+                padding: 1.5rem 1rem;
             }
 
             .page-btn {
-                width: 40px;
+                min-width: 40px;
                 height: 40px;
-                font-size: 0.9rem;
+                font-size: 1rem;
             }
 
-            .page-numbers {
-                gap: 0.3rem;
+            .prev-btn,
+            .next-btn {
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- HEADER -->
     <header>
-        <div class="header-content">
-            <h1>🦸 Super Comics</h1>
-            <div class="header-info">
-                <p><strong>Editora:</strong> Mega Quadrinhos</p>
-                <p><strong>Série:</strong> As Aventuras do Herói</p>
-                <p><strong>Autor:</strong> João Silva</p>
-            </div>
+        <h1>A Jornada Épica</h1>
+        <div class="header-info">
+            <span><strong>Editora:</strong> Cosmic Comics</span>
+            <span><strong>Autor:</strong> João Silva</span>
+            <span><strong>Ilustrador:</strong> Maria Santos</span>
         </div>
     </header>
 
-    <!-- ÁREA DE CONTEÚDO -->
-    <div class="comic-container">
+    <main>
         <div class="comic-grid">
             <div class="comic-panel">
-                <span class="panel-number">1</span>
-                <div class="panel-image">🌆</div>
-                <p class="panel-text">Era uma vez na cidade de Metrópolis, onde o sol brilhava sobre os arranha-céus...</p>
+                <img src="imagens/pagina1-quadro1.jpg" alt="Quadro 1" class="comic-image">
             </div>
-
             <div class="comic-panel">
-                <span class="panel-number">2</span>
-                <div class="panel-image">👤</div>
-                <p class="panel-text">Nosso herói acordava para mais um dia de aventuras e desafios pela frente.</p>
+                <img src="imagens/pagina1-quadro2.jpg" alt="Quadro 2" class="comic-image">
             </div>
-
             <div class="comic-panel">
-                <span class="panel-number">3</span>
-                <div class="panel-image">⚡</div>
-                <p class="panel-text">De repente, uma explosão ecoou pela cidade! Algo terrível estava acontecendo!</p>
+                <img src="imagens/pagina1-quadro3.jpg" alt="Quadro 3" class="comic-image">
             </div>
-
             <div class="comic-panel">
-                <span class="panel-number">4</span>
-                <div class="panel-image">🦹</div>
-                <p class="panel-text">Sem hesitar, nosso herói vestiu sua capa e partiu para salvar o dia!</p>
-            </div>
-
-            <div class="comic-panel">
-                <span class="panel-number">5</span>
-                <div class="panel-image">💥</div>
-                <p class="panel-text">A batalha épica começou contra as forças do mal que ameaçavam a cidade.</p>
-            </div>
-
-            <div class="comic-panel">
-                <span class="panel-number">6</span>
-                <div class="panel-image">🏆</div>
-                <p class="panel-text">Com coragem e determinação, o herói triunfou e a paz foi restaurada!</p>
+                <img src="imagens/pagina1-quadro4.jpg" alt="Quadro 4" class="comic-image">
             </div>
         </div>
+    </main>
 
-        <div class="current-page-info">Página <span id="currentPage">1</span> de 5</div>
+    <nav class="pagination">
+        <span class="page-btn prev-btn disabled">&lt;</span>
+        <span class="page-btn page-number active">1</span>
+        <a href="page2.html" class="page-btn page-number">2</a>
+        <a href="page3.html" class="page-btn page-number">3</a>
+        <a href="page4.html" class="page-btn page-number">4</a>
+        <a href="page5.html" class="page-btn page-number">5</a>
+        <a href="page2.html" class="page-btn next-btn">&gt;</a>
+    </nav>
 
-        <!-- MENU DE PAGINAÇÃO -->
-        <nav class="pagination-menu">
-            <button class="pagination-btn" id="prevBtn">← Anterior</button>
-            <div class="page-numbers">
-                <button class="page-btn active" data-page="1">1</button>
-                <button class="page-btn" data-page="2">2</button>
-                <button class="page-btn" data-page="3">3</button>
-                <button class="page-btn" data-page="4">4</button>
-                <button class="page-btn" data-page="5">5</button>
-            </div>
-            <button class="pagination-btn" id="nextBtn">Próxima →</button>
-        </nav>
-    </div>
-
-    <script>
-        // Dados das páginas (cada página tem 6 quadrinhos)
-        const pagesData = {
-            1: [
-                { number: 1, image: 'https://imgur.com/placeholder1.jpg', text: 'Atenção meninos e meninas! Estão abertas as inscrições para o torneio de Bets!' },
-                { number: 2, image: 'https://imgur.com/placeholder2.jpg', text: 'E qual será a dupla que vai começar com os tacos?!' },
-                { number: 3, image: 'https://imgur.com/placeholder3.jpg', text: 'Vamos tirar no "Cara ou Coroa"!' },
-                { number: 4, image: 'https://imgur.com/placeholder4.jpg', text: 'Queremos Cara!!!' },
-                { number: 5, image: 'https://imgur.com/placeholder5.jpg', text: 'Coroa! Latão e Baré começam com os tacos!' },
-                { number: 6, image: 'https://imgur.com/placeholder6.jpg', text: 'YEAHHHHHHHHHHH!!!' }
-            ],
-            2: [
-                { number: 7, emoji: '🌙', text: 'A noite caiu sobre a cidade, mas a paz não duraria muito tempo...', large: false },
-                { number: 8, emoji: '👹', text: 'Um novo vilão surgiu das sombras, mais poderoso que o anterior!', large: true },
-                { number: 9, emoji: '🚨', text: 'O alarme da cidade soou! Era hora do herói entrar em ação novamente!', large: false },
-                { number: 10, emoji: '🔥', text: 'O confronto foi intenso, com explosões iluminando o céu noturno.', large: false },
-                { number: 11, emoji: '💪', text: 'Usando toda sua força e habilidade, o herói não desistiu!', large: true },
-                { number: 12, emoji: '✨', text: 'Mais uma vitória para o bem! A cidade estava segura mais uma vez.', large: true }
-            ],
-            3: [
-                { number: 13, emoji: '📰', text: 'Os jornais noticiaram a bravura do herói em manchetes pelo mundo!', large: false },
-                { number: 14, emoji: '🏙️', text: 'Mas enquanto a cidade celebrava, algo sinistro estava sendo planejado...', large: false },
-                { number: 15, emoji: '🎭', text: 'Uma organização secreta de vilões se reuniu para derrotar o herói.', large: false },
-                { number: 16, emoji: '🔍', text: 'Nosso herói investigou pistas misteriosas deixadas pela cidade.', large: true },
-                { number: 17, emoji: '⚔️', text: 'A descoberta revelou o maior desafio que ele já havia enfrentado!', large: false },
-                { number: 18, emoji: '🌟', text: 'Mas ele estava pronto. A verdadeira batalha estava apenas começando!', large: true }
-            ],
-            4: [
-                { number: 19, emoji: '🏔️', text: 'A jornada levou o herói até as montanhas distantes em busca de respostas.', large: false },
-                { number: 20, emoji: '🧙', text: 'Lá, ele encontrou um sábio mentor que revelou seus verdadeiros poderes.', large: true },
-                { number: 21, emoji: '⚡', text: 'Com treinamento intenso, o herói desbloqueou habilidades inimagináveis!', large: false },
-                { number: 22, emoji: '🎯', text: 'Agora preparado, era hora de voltar e enfrentar a organização do mal.', large: true },
-                { number: 23, emoji: '💣', text: 'A batalha final começou! Explosões, poder e determinação se chocavam!', large: false },
-                { number: 24, emoji: '🛡️', text: 'Com seus novos poderes, o herói protegeu a todos e venceu o impossível!', large: true }
-            ],
-            5: [
-                { number: 25, emoji: '🌅', text: 'Um novo amanhecer trouxe paz definitiva para Metrópolis.', large: false },
-                { number: 26, emoji: '👥', text: 'A população agradeceu ao herói, que permaneceu humilde e vigilante.', large: false },
-                { number: 27, emoji: '🏅', text: 'Medalhas de honra foram concedidas, mas ele sabia que sua missão continuava.', large: false },
-                { number: 28, emoji: '📖', text: 'Esta história foi registrada para inspirar futuras gerações de heróis.', large: true },
-                { number: 29, emoji: '🌍', text: 'Porque enquanto houver injustiça, sempre haverá alguém para lutar.', large: false },
-                { number: 30, emoji: '🦸‍♂️', text: 'E assim, nossa história termina... mas as aventuras nunca acabam! FIM.', large: true }
-            ]
-        };
-
-        let currentPage = 1;
-        const totalPages = 5;
-
-        // Elementos do DOM
-        const comicGrid = document.querySelector('.comic-grid');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const pageButtons = document.querySelectorAll('.page-btn');
-        const currentPageSpan = document.getElementById('currentPage');
-
-        // Função para renderizar os quadrinhos da página atual
-        function renderPage(pageNumber) {
-            comicGrid.innerHTML = '';
-            const panels = pagesData[pageNumber];
-            
-            panels.forEach(panel => {
-                const panelDiv = document.createElement('div');
-                panelDiv.className = 'comic-panel';
-                if (panel.large) {
-                    panelDiv.classList.add('panel-large');
-                }
-                
-                // Verificar se tem imagem ou emoji
-                const imageContent = panel.image 
-                    ? `<img src="${panel.image}" alt="Painel ${panel.number}">` 
-                    : panel.emoji;
-                
-                panelDiv.innerHTML = `
-                    <span class="panel-number">${panel.number}</span>
-                    <div class="panel-image">${imageContent}</div>
-                    <p class="panel-text">${panel.text}</p>
-                `;
-                comicGrid.appendChild(panelDiv);
-            });
-
-            // Rolar suavemente para o topo da área de quadrinhos
-            document.querySelector('.comic-container').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Função para atualizar os botões
-        function updateButtons() {
-            // Atualizar botões anterior/próxima
-            prevBtn.disabled = currentPage === 1;
-            nextBtn.disabled = currentPage === totalPages;
-
-            // Atualizar botões de número de página
-            pageButtons.forEach(btn => {
-                const page = parseInt(btn.dataset.page);
-                btn.classList.toggle('active', page === currentPage);
-            });
-
-            // Atualizar informação de página atual
-            currentPageSpan.textContent = currentPage;
-        }
-
-        // Event listeners para botões anterior/próxima
-        prevBtn.addEventListener('click', () => {
-            if (currentPage > 1) {
-                currentPage--;
-                renderPage(currentPage);
-                updateButtons();
-            }
-        });
-
-        nextBtn.addEventListener('click', () => {
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderPage(currentPage);
-                updateButtons();
-            }
-        });
-
-        // Event listeners para botões de número de página
-        pageButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const page = parseInt(btn.dataset.page);
-                currentPage = page;
-                renderPage(currentPage);
-                updateButtons();
-            });
-        });
-
-        // Inicializar a primeira página
-        renderPage(currentPage);
-        updateButtons();
-    </script>
-
-    <!-- FOOTER -->
     <footer>
         <div class="footer-content">
-            <div class="footer-section">
-                <h3>Sobre a Página</h3>
-                <p>Esta é uma página de demonstração de história em quadrinhos criada com CSS Grid e design responsivo. Adaptável para desktop, tablet e mobile.</p>
+            <div class="social-icons">
+                <a href="#" class="social-icon" title="Instagram">IG</a>
+                <a href="#" class="social-icon" title="Twitter">TW</a>
+                <a href="#" class="social-icon" title="Facebook">FB</a>
+                <a href="#" class="social-icon" title="Email">@</a>
             </div>
-
-            <div class="footer-section">
-                <h3>Redes Sociais</h3>
-                <div class="social-links">
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
-                    <a href="#">YouTube</a>
-                </div>
+            <div class="footer-info">
+                <p><strong>Contato:</strong> contato@jornada-epica.com</p>
+                <p>&copy; 2026 Cosmic Comics. Todos os direitos reservados.</p>
+                <p>Desenvolvido com HTML5 e CSS Grid</p>
             </div>
-
-            <div class="footer-section contact-info">
-                <h3>Contato</h3>
-                <p>📧 Email: contato@supercomics.com</p>
-                <p>📱 Telefone: (11) 9999-9999</p>
-                <p>📍 São Paulo, Brasil</p>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2026 Super Comics. Todos os direitos reservados.</p>
         </div>
     </footer>
 </body>
 </html>
+
+<!-- PÁGINA 2 - Salvar como page2.html -->
+<!--
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcomic - A Jornada Épica - Página 2</title>
+    [COPIAR TODO O CSS ACIMA]
+</head>
+<body>
+    <header>
+        <h1>A Jornada Épica</h1>
+        <div class="header-info">
+            <span><strong>Editora:</strong> Cosmic Comics</span>
+            <span><strong>Autor:</strong> João Silva</span>
+            <span><strong>Ilustrador:</strong> Maria Santos</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="comic-grid">
+            <div class="comic-panel">
+                <div class="panel-content">Página 2 - Quadro 1</div>
+            </div>
+            <div class="comic-panel">
+                <div class="panel-content">Página 2 - Quadro 2</div>
+            </div>
+            <div class="comic-panel">
+                <div class="panel-content">Página 2 - Quadro 3</div>
+            </div>
+            <div class="comic-panel">
+                <div class="panel-content">Página 2 - Quadro 4</div>
+            </div>
+        </div>
+    </main>
+
+    <nav class="pagination">
+        <a href="index.html" class="page-btn prev-btn">&lt;</a>
+        <a href="index.html" class="page-btn page-number">1</a>
+        <span class="page-btn page-number active">2</span>
+        <a href="page3.html" class="page-btn page-number">3</a>
+        <a href="page4.html" class="page-btn page-number">4</a>
+        <a href="page5.html" class="page-btn page-number">5</a>
+        <a href="page3.html" class="page-btn next-btn">&gt;</a>
+    </nav>
+
+    [COPIAR TODO O FOOTER]
+</body>
+</html>
+-->
+
+<!-- PÁGINA 3 - Salvar como page3.html -->
+<!--
+[MESMA ESTRUTURA, mudando:]
+- Title: Página 3
+- Conteúdo dos quadros: Página 3 - Quadro X
+- Navegação:
+  <a href="page2.html" class="page-btn prev-btn">&lt;</a>
+  <a href="index.html" class="page-btn page-number">1</a>
+  <a href="page2.html" class="page-btn page-number">2</a>
+  <span class="page-btn page-number active">3</span>
+  <a href="page4.html" class="page-btn page-number">4</a>
+  <a href="page5.html" class="page-btn page-number">5</a>
+  <a href="page4.html" class="page-btn next-btn">&gt;</a>
+-->
+
+<!-- PÁGINA 4 - Salvar como page4.html -->
+<!--
+[MESMA ESTRUTURA, mudando:]
+- Title: Página 4
+- Conteúdo dos quadros: Página 4 - Quadro X
+- Navegação:
+  <a href="page3.html" class="page-btn prev-btn">&lt;</a>
+  <a href="index.html" class="page-btn page-number">1</a>
+  <a href="page2.html" class="page-btn page-number">2</a>
+  <a href="page3.html" class="page-btn page-number">3</a>
+  <span class="page-btn page-number active">4</span>
+  <a href="page5.html" class="page-btn page-number">5</a>
+  <a href="page5.html" class="page-btn next-btn">&gt;</a>
+-->
+
+<!-- PÁGINA 5 - Salvar como page5.html -->
+<!--
+[MESMA ESTRUTURA, mudando:]
+- Title: Página 5
+- Conteúdo dos quadros: Página 5 - Quadro X
+- Navegação:
+  <a href="page4.html" class="page-btn prev-btn">&lt;</a>
+  <a href="index.html" class="page-btn page-number">1</a>
+  <a href="page2.html" class="page-btn page-number">2</a>
+  <a href="page3.html" class="page-btn page-number">3</a>
+  <a href="page4.html" class="page-btn page-number">4</a>
+  <span class="page-btn page-number active">5</span>
+  <span class="page-btn next-btn disabled">&gt;</span>
+-->
+
+<!-- 
+INSTRUÇÕES PARA CRIAR O PACOTE COMPLETO:
+
+1. Salve a página acima como "index.html" (Página 1)
+
+2. Crie "page2.html" copiando toda a estrutura e CSS, alterando:
+   - Title para "Página 2"
+   - Conteúdo dos quadros para "Página 2 - Quadro X"
+   - Links de navegação conforme comentado
+
+3. Crie "page3.html", "page4.html" e "page5.html" seguindo o mesmo padrão
+
+4. Coloque todos os 5 arquivos HTML na mesma pasta
+
+5. Abra index.html no navegador e navegue entre as páginas!
+
+DICA: A navegação está totalmente funcional com links relativos.
+O botão < fica desabilitado na página 1
+O botão > fica desabilitado na página 5
+-->
