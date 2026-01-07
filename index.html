@@ -15,6 +15,7 @@
             font-family: 'Arial', sans-serif;
             background-color: #f5f5f5;
             color: #333;
+            padding-top: 180px;
         }
 
         /* HEADER */
@@ -24,6 +25,16 @@
             padding: 2rem;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        /* Adiciona espaçamento no body para compensar o header fixo */
+        body {
+            padding-top: 140px;
         }
 
         .header-content h1 {
@@ -56,7 +67,7 @@
         .comic-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
+            gap: 2rem;
             margin-bottom: 3rem;
         }
 
@@ -65,7 +76,7 @@
             border: 4px solid #333;
             border-radius: 8px;
             padding: 1.5rem;
-            min-height: 250px;
+            min-height: 300px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
@@ -80,21 +91,16 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-        /* Painel grande - ocupa 2 colunas */
+        /* Painéis grandes ocupam 2 colunas */
         .panel-large {
             grid-column: span 2;
-            min-height: 350px;
         }
 
-        /* Painel médio - ocupa 1 coluna mas mais alto */
-        .panel-medium {
-            min-height: 350px;
-        }
-
-        /* Painel extra grande - ocupa 3 colunas (largura total) */
-        .panel-xlarge {
-            grid-column: span 3;
-            min-height: 350px;
+        /* No desktop, quadro 6 também é grande (2 colunas) */
+        @media (min-width: 1025px) {
+            .comic-panel:nth-child(6) {
+                grid-column: span 2;
+            }
         }
 
         .panel-number {
@@ -111,7 +117,6 @@
             justify-content: center;
             font-weight: bold;
             font-size: 1.1rem;
-            z-index: 20;
         }
 
         .panel-image {
@@ -314,10 +319,6 @@
                 gap: 1.5rem;
             }
 
-            .panel-large {
-                grid-column: span 2;
-            }
-
             .header-content h1 {
                 font-size: 2rem;
             }
@@ -329,15 +330,13 @@
 
         /* MOBILE - 1 COLUNA */
         @media (max-width: 768px) {
+            body {
+                padding-top: 150px;
+            }
+
             .comic-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
-            }
-
-            .panel-large,
-            .panel-medium {
-                grid-column: span 1;
-                min-height: 300px;
             }
 
             .header-content h1 {
@@ -361,6 +360,10 @@
 
             header {
                 padding: 1.5rem;
+            }
+
+            .comic-panel {
+                min-height: 250px;
             }
 
             .pagination-menu {
@@ -399,7 +402,43 @@
 
     <!-- ÁREA DE CONTEÚDO -->
     <div class="comic-container">
-        <div class="comic-grid" id="comicGrid"></div>
+        <div class="comic-grid">
+            <div class="comic-panel">
+                <span class="panel-number">1</span>
+                <div class="panel-image">🌆</div>
+                <p class="panel-text">Era uma vez na cidade de Metrópolis, onde o sol brilhava sobre os arranha-céus...</p>
+            </div>
+
+            <div class="comic-panel">
+                <span class="panel-number">2</span>
+                <div class="panel-image">👤</div>
+                <p class="panel-text">Nosso herói acordava para mais um dia de aventuras e desafios pela frente.</p>
+            </div>
+
+            <div class="comic-panel">
+                <span class="panel-number">3</span>
+                <div class="panel-image">⚡</div>
+                <p class="panel-text">De repente, uma explosão ecoou pela cidade! Algo terrível estava acontecendo!</p>
+            </div>
+
+            <div class="comic-panel">
+                <span class="panel-number">4</span>
+                <div class="panel-image">🦹</div>
+                <p class="panel-text">Sem hesitar, nosso herói vestiu sua capa e partiu para salvar o dia!</p>
+            </div>
+
+            <div class="comic-panel">
+                <span class="panel-number">5</span>
+                <div class="panel-image">💥</div>
+                <p class="panel-text">A batalha épica começou contra as forças do mal que ameaçavam a cidade.</p>
+            </div>
+
+            <div class="comic-panel">
+                <span class="panel-number">6</span>
+                <div class="panel-image">🏆</div>
+                <p class="panel-text">Com coragem e determinação, o herói triunfou e a paz foi restaurada!</p>
+            </div>
+        </div>
 
         <div class="current-page-info">Página <span id="currentPage">1</span> de 5</div>
 
@@ -417,12 +456,144 @@
         </nav>
     </div>
 
+    <script>
+        // Dados das páginas (cada página tem 6 quadrinhos)
+        const pagesData = {
+            1: [
+                { number: 1, image: 'https://imgur.com/placeholder1.jpg', text: 'Atenção meninos e meninas! Estão abertas as inscrições para o torneio de Bets!' },
+                { number: 2, image: 'https://imgur.com/placeholder2.jpg', text: 'E qual será a dupla que vai começar com os tacos?!' },
+                { number: 3, image: 'https://imgur.com/placeholder3.jpg', text: 'Vamos tirar no "Cara ou Coroa"!' },
+                { number: 4, image: 'https://imgur.com/placeholder4.jpg', text: 'Queremos Cara!!!' },
+                { number: 5, image: 'https://imgur.com/placeholder5.jpg', text: 'Coroa! Latão e Baré começam com os tacos!' },
+                { number: 6, image: 'https://imgur.com/placeholder6.jpg', text: 'YEAHHHHHHHHHHH!!!' }
+            ],
+            2: [
+                { number: 7, emoji: '🌙', text: 'A noite caiu sobre a cidade, mas a paz não duraria muito tempo...', large: false },
+                { number: 8, emoji: '👹', text: 'Um novo vilão surgiu das sombras, mais poderoso que o anterior!', large: true },
+                { number: 9, emoji: '🚨', text: 'O alarme da cidade soou! Era hora do herói entrar em ação novamente!', large: false },
+                { number: 10, emoji: '🔥', text: 'O confronto foi intenso, com explosões iluminando o céu noturno.', large: false },
+                { number: 11, emoji: '💪', text: 'Usando toda sua força e habilidade, o herói não desistiu!', large: true },
+                { number: 12, emoji: '✨', text: 'Mais uma vitória para o bem! A cidade estava segura mais uma vez.', large: true }
+            ],
+            3: [
+                { number: 13, emoji: '📰', text: 'Os jornais noticiaram a bravura do herói em manchetes pelo mundo!', large: false },
+                { number: 14, emoji: '🏙️', text: 'Mas enquanto a cidade celebrava, algo sinistro estava sendo planejado...', large: false },
+                { number: 15, emoji: '🎭', text: 'Uma organização secreta de vilões se reuniu para derrotar o herói.', large: false },
+                { number: 16, emoji: '🔍', text: 'Nosso herói investigou pistas misteriosas deixadas pela cidade.', large: true },
+                { number: 17, emoji: '⚔️', text: 'A descoberta revelou o maior desafio que ele já havia enfrentado!', large: false },
+                { number: 18, emoji: '🌟', text: 'Mas ele estava pronto. A verdadeira batalha estava apenas começando!', large: true }
+            ],
+            4: [
+                { number: 19, emoji: '🏔️', text: 'A jornada levou o herói até as montanhas distantes em busca de respostas.', large: false },
+                { number: 20, emoji: '🧙', text: 'Lá, ele encontrou um sábio mentor que revelou seus verdadeiros poderes.', large: true },
+                { number: 21, emoji: '⚡', text: 'Com treinamento intenso, o herói desbloqueou habilidades inimagináveis!', large: false },
+                { number: 22, emoji: '🎯', text: 'Agora preparado, era hora de voltar e enfrentar a organização do mal.', large: true },
+                { number: 23, emoji: '💣', text: 'A batalha final começou! Explosões, poder e determinação se chocavam!', large: false },
+                { number: 24, emoji: '🛡️', text: 'Com seus novos poderes, o herói protegeu a todos e venceu o impossível!', large: true }
+            ],
+            5: [
+                { number: 25, emoji: '🌅', text: 'Um novo amanhecer trouxe paz definitiva para Metrópolis.', large: false },
+                { number: 26, emoji: '👥', text: 'A população agradeceu ao herói, que permaneceu humilde e vigilante.', large: false },
+                { number: 27, emoji: '🏅', text: 'Medalhas de honra foram concedidas, mas ele sabia que sua missão continuava.', large: false },
+                { number: 28, emoji: '📖', text: 'Esta história foi registrada para inspirar futuras gerações de heróis.', large: true },
+                { number: 29, emoji: '🌍', text: 'Porque enquanto houver injustiça, sempre haverá alguém para lutar.', large: false },
+                { number: 30, emoji: '🦸‍♂️', text: 'E assim, nossa história termina... mas as aventuras nunca acabam! FIM.', large: true }
+            ]
+        };
+
+        let currentPage = 1;
+        const totalPages = 5;
+
+        // Elementos do DOM
+        const comicGrid = document.querySelector('.comic-grid');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pageButtons = document.querySelectorAll('.page-btn');
+        const currentPageSpan = document.getElementById('currentPage');
+
+        // Função para renderizar os quadrinhos da página atual
+        function renderPage(pageNumber) {
+            comicGrid.innerHTML = '';
+            const panels = pagesData[pageNumber];
+            
+            panels.forEach(panel => {
+                const panelDiv = document.createElement('div');
+                panelDiv.className = 'comic-panel';
+                if (panel.large) {
+                    panelDiv.classList.add('panel-large');
+                }
+                
+                // Verificar se tem imagem ou emoji
+                const imageContent = panel.image 
+                    ? `<img src="${panel.image}" alt="Painel ${panel.number}">` 
+                    : panel.emoji;
+                
+                panelDiv.innerHTML = `
+                    <span class="panel-number">${panel.number}</span>
+                    <div class="panel-image">${imageContent}</div>
+                    <p class="panel-text">${panel.text}</p>
+                `;
+                comicGrid.appendChild(panelDiv);
+            });
+
+            // Rolar suavemente para o topo da área de quadrinhos
+            document.querySelector('.comic-container').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Função para atualizar os botões
+        function updateButtons() {
+            // Atualizar botões anterior/próxima
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+
+            // Atualizar botões de número de página
+            pageButtons.forEach(btn => {
+                const page = parseInt(btn.dataset.page);
+                btn.classList.toggle('active', page === currentPage);
+            });
+
+            // Atualizar informação de página atual
+            currentPageSpan.textContent = currentPage;
+        }
+
+        // Event listeners para botões anterior/próxima
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderPage(currentPage);
+                updateButtons();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderPage(currentPage);
+                updateButtons();
+            }
+        });
+
+        // Event listeners para botões de número de página
+        pageButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const page = parseInt(btn.dataset.page);
+                currentPage = page;
+                renderPage(currentPage);
+                updateButtons();
+            });
+        });
+
+        // Inicializar a primeira página
+        renderPage(currentPage);
+        updateButtons();
+    </script>
+
     <!-- FOOTER -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Sobre a Página</h3>
-                <p>História em quadrinhos com layout variado e design responsivo. Adaptável para desktop, tablet e mobile.</p>
+                <p>Esta é uma página de demonstração de história em quadrinhos criada com CSS Grid e design responsivo. Adaptável para desktop, tablet e mobile.</p>
             </div>
 
             <div class="footer-section">
@@ -447,125 +618,5 @@
             <p>&copy; 2026 Super Comics. Todos os direitos reservados.</p>
         </div>
     </footer>
-
-    <script>
-        // Dados das páginas com layouts variados
-        const pagesData = {
-            1: [
-                { number: 1, size: 'large', emoji: '🌆', text: 'Painel 1 - Grande' },
-                { number: 2, size: 'medium', emoji: '👤', text: 'Painel 2 - Médio' },
-                { number: 3, size: 'normal', emoji: '⚡', text: 'Painel 3' },
-                { number: 4, size: 'large', emoji: '🦹', text: 'Painel 4 - Grande' },
-                { number: 5, size: 'normal', emoji: '💥', text: 'Painel 5' },
-                { number: 6, size: 'large', emoji: '🏆', text: 'Painel 6 - large' }
-            ],
-            2: [
-                { number: 7, size: 'medium', emoji: '🌙', text: 'Painel 7 - Médio' },
-                { number: 8, size: 'large', emoji: '👹', text: 'Painel 8 - Grande' },
-                { number: 9, size: 'normal', emoji: '🚨', text: 'Painel 9' },
-                { number: 10, size: 'normal', emoji: '🔥', text: 'Painel 10' },
-                { number: 11, size: 'large', emoji: '💪', text: 'Painel 11 - Grande' },
-                { number: 12, size: 'normal', emoji: '✨', text: 'Painel 12' }
-            ],
-            3: [
-                { number: 13, size: 'large', emoji: '📰', text: 'Painel 13 - Grande' },
-                { number: 14, size: 'normal', emoji: '🏙️', text: 'Painel 14' },
-                { number: 15, size: 'medium', emoji: '🎭', text: 'Painel 15 - Médio' },
-                { number: 16, size: 'normal', emoji: '🔍', text: 'Painel 16' },
-                { number: 17, size: 'large', emoji: '⚔️', text: 'Painel 17 - Grande' },
-                { number: 18, size: 'medium', emoji: '🌟', text: 'Painel 18 - Médio' }
-            ],
-            4: [
-                { number: 19, size: 'normal', emoji: '🏔️', text: 'Painel 19' },
-                { number: 20, size: 'large', emoji: '🧙', text: 'Painel 20 - Grande' },
-                { number: 21, size: 'medium', emoji: '⚡', text: 'Painel 21 - Médio' },
-                { number: 22, size: 'large', emoji: '🎯', text: 'Painel 22 - Grande' },
-                { number: 23, size: 'normal', emoji: '💣', text: 'Painel 23' },
-                { number: 24, size: 'normal', emoji: '🛡️', text: 'Painel 24' }
-            ],
-            5: [
-                { number: 25, size: 'medium', emoji: '🌅', text: 'Painel 25 - Médio' },
-                { number: 26, size: 'large', emoji: '👥', text: 'Painel 26 - Grande' },
-                { number: 27, size: 'normal', emoji: '🏅', text: 'Painel 27' },
-                { number: 28, size: 'normal', emoji: '📖', text: 'Painel 28' },
-                { number: 29, size: 'medium', emoji: '🌍', text: 'Painel 29 - Médio' },
-                { number: 30, size: 'large', emoji: '🦸‍♂️', text: 'Painel 30 - Grande - FIM' }
-            ]
-        };
-
-        let currentPage = 1;
-        const totalPages = 5;
-
-        // Elementos do DOM
-        const comicGrid = document.getElementById('comicGrid');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const pageButtons = document.querySelectorAll('.page-btn');
-        const currentPageSpan = document.getElementById('currentPage');
-
-        // Função para renderizar os quadrinhos da página atual
-        function renderPage(pageNumber) {
-            comicGrid.innerHTML = '';
-            const panels = pagesData[pageNumber];
-            
-            panels.forEach(panel => {
-                const panelDiv = document.createElement('div');
-                panelDiv.className = `comic-panel ${panel.size === 'large' ? 'panel-large' : panel.size === 'medium' ? 'panel-medium' : ''}`;
-                
-                panelDiv.innerHTML = `
-                    <span class="panel-number">${panel.number}</span>
-                    <div class="panel-image">${panel.emoji}</div>
-                    <p class="panel-text">${panel.text}</p>
-                `;
-                comicGrid.appendChild(panelDiv);
-            });
-
-            // Rolar suavemente para o topo da área de quadrinhos
-            document.querySelector('.comic-container').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Função para atualizar os botões
-        function updateButtons() {
-            prevBtn.disabled = currentPage === 1;
-            nextBtn.disabled = currentPage === totalPages;
-
-            pageButtons.forEach(btn => {
-                const page = parseInt(btn.dataset.page);
-                btn.classList.toggle('active', page === currentPage);
-            });
-
-            currentPageSpan.textContent = currentPage;
-        }
-
-        // Event listeners
-        prevBtn.addEventListener('click', () => {
-            if (currentPage > 1) {
-                currentPage--;
-                renderPage(currentPage);
-                updateButtons();
-            }
-        });
-
-        nextBtn.addEventListener('click', () => {
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderPage(currentPage);
-                updateButtons();
-            }
-        });
-
-        pageButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const page = parseInt(btn.dataset.page);
-                currentPage = page;
-                renderPage(currentPage);
-                updateButtons();
-            });
-        });
-
-        // Inicializar
-        renderPage(currentPage);
-        updateButtons();
-    </script>
 </body>
 </html>
